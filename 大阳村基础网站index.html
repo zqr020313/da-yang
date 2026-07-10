@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>古村遗韵 · 大阳古村文化数字博物馆</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== 1. CSS 变量 ===== */
+        :root {
+            --primary: #7A4B2C;
+            --primary-light: #A87B5A;
+            --secondary: #DCC5A0;
+            --accent: #2F5D4A;
+            --bg-warm: #FDF8F2;
+            --text-dark: #2C241E;
+            --text-light: #F5EFE8;
+            --shadow: 0 10px 30px rgba(90, 60, 40, 0.12);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-serif: 'Noto Serif SC', 'Georgia', serif;
+            --font-sans: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* ===== 2. 全局重置 ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-warm);
+            color: var(--text-dark);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== 3. 导航 ===== */
+        .header {
+            background: rgba(253, 248, 242, 0.92);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(122, 75, 44, 0.1);
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        .logo {
+            font-family: var(--font-serif);
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span {
+            background: var(--primary);
+            color: var(--text-light);
+            font-size: 1rem;
+            padding: 0 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            font-weight: 500;
+            font-size: 0.98rem;
+        }
+        .nav-links a {
+            padding: 6px 0;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .nav-cta {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 8px 20px !important;
+            border-radius: 30px;
+            border-bottom: none !important;
+            font-weight: 600;
+        }
+        .nav-cta:hover { background: var(--accent) !important; transform: translateY(-2px); }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 8px;
+        }
+        .menu-toggle span {
+            width: 26px;
+            height: 2.5px;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        /* ===== 4. 英雄区 ===== */
+        .hero {
+            padding: 60px 0 80px;
+            background: linear-gradient(135deg, #F3EBE0 0%, #E5D7C4 100%);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(122, 75, 44, 0.08);
+        }
+        .hero::before {
+            content: "🏮";
+            position: absolute;
+            font-size: 28rem;
+            opacity: 0.04;
+            right: -60px;
+            bottom: -80px;
+            transform: rotate(10deg);
+            pointer-events: none;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-text h1 {
+            font-family: var(--font-serif);
+            font-size: 3.4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+        .hero-text h1 em {
+            color: var(--primary);
+            font-style: normal;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #4D3E33;
+            max-width: 540px;
+            margin-bottom: 36px;
+            opacity: 0.85;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(122, 75, 44, 0.3);
+        }
+        .btn-primary:hover {
+            background: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 34px rgba(47, 93, 74, 0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-4px);
+        }
+        .hero-image {
+            border-radius: var(--border-radius);
+            aspect-ratio: 4/3;
+            background-size: cover;
+            background-position: center;
+            box-shadow: var(--shadow);
+            border: 2px solid rgba(255,255,255,0.5);
+            position: relative;
+        }
+        .hero-image-caption {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(44, 36, 30, 0.7);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* ===== 5. 通用标题 ===== */
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        .section-subtitle {
+            color: #6B5B4F;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 640px;
+        }
+        .text-center { text-align: center; }
+        .text-center .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .text-center .section-subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== 6. 村落图鉴 ===== */
+        .section-padding { padding: 80px 0; }
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .village-card {
+            background: #fff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(220, 197, 160, 0.3);
+            cursor: pointer;
+        }
+        .village-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 24px 48px rgba(90, 60, 40, 0.15);
+        }
+        .village-card-img {
+            height: 200px;
+            background: #e0d0bc;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .village-card-tag {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--primary);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .village-card-content { padding: 24px 24px 28px; }
+        .village-card-content h3 {
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+        .village-card-content .location {
+            font-size: 0.9rem;
+            color: var(--primary-light);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .village-card-content p {
+            color: #4D3E33;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 16px;
+        }
+        .village-card-content .meta {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 14px;
+            font-size: 0.85rem;
+            color: #7A6B5F;
+        }
+
+        /* ===== 7. 文化遗产 ===== */
+        .heritage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 28px;
+            margin-top: 20px;
+        }
+        .heritage-item {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-bottom: 4px solid var(--secondary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .heritage-item:hover {
+            border-bottom-color: var(--primary);
+            transform: scale(1.02);
+        }
+        .heritage-item .icon { font-size: 3rem; margin-bottom: 12px; }
+        .heritage-item h4 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+        .heritage-item p { font-size: 0.9rem; color: #5F4F43; }
+
+        /* ===== 8. 口述记忆 ===== */
+        .story-block {
+            background: linear-gradient(145deg, #EFE6DA, #E3D5C4);
+            border-radius: var(--border-radius);
+            padding: 50px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .story-block h2 { font-family: var(--font-serif); font-size: 2rem; }
+        .story-block .quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            padding-left: 20px;
+            border-left: 4px solid var(--primary);
+            color: #3D322B;
+        }
+        .interact-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(47, 93, 74, 0.25);
+            margin-top: 16px;
+        }
+        .interact-btn:hover {
+            background: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(122, 75, 44, 0.3);
+        }
+        #wisdom-display {
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(4px);
+            padding: 20px 28px;
+            border-radius: 60px;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            border: 1px dashed var(--primary-light);
+            margin-top: 20px;
+        }
+
+        /* ===== 9. 弹窗 ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            animation: modalFadeIn 0.3s ease;
+            position: relative;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 28px;
+            font-size: 3rem;
+            font-weight: 300;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 10;
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .modal-close:hover { transform: rotate(90deg); }
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-height: 70vh;
+            overflow: hidden;
+            background: #e0d0bc;
+        }
+        .carousel-container img {
+            width: 100%;
+            height: 100%;
+            max-height: 70vh;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            font-size: 2rem;
+            padding: 10px 16px;
+            cursor: pointer;
+            z-index: 5;
+            border-radius: 50%;
+            transition: background 0.3s;
+            user-select: none;
+        }
+        .carousel-btn:hover { background: rgba(0, 0, 0, 0.8); }
+        .carousel-btn.prev { left: 12px; }
+        .carousel-btn.next { right: 12px; }
+        .carousel-btn.hidden { display: none; }
+        .carousel-dots {
+            text-align: center;
+            padding: 10px 0 6px;
+            background: #fff;
+        }
+        .carousel-dots .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .carousel-dots .dot.active { background: var(--primary); }
+        .modal-caption {
+            padding: 20px 28px;
+            background: #fff;
+            color: var(--text-dark);
+            border-top: 1px solid #eee;
+        }
+        .modal-caption h3 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+        .modal-caption p { color: #5F4F43; font-size: 1rem; opacity: 0.8; }
+        .heritage-detail {
+            max-width: 520px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .heritage-detail-content { display: flex; flex-direction: column; align-items: center; }
+        .heritage-detail-icon { font-size: 5rem; margin-bottom: 12px; line-height: 1; }
+        .heritage-detail h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+        .heritage-detail-body {
+            text-align: left;
+            width: 100%;
+            color: #3D322B;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        .heritage-detail-body ul {
+            list-style: disc;
+            padding-left: 24px;
+            margin-top: 12px;
+        }
+        .heritage-detail-body ul li { margin-bottom: 6px; }
+        #heritageDetailImage {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin: 12px 0;
+            display: none;
+        }
+        #personModal .modal-content { max-width: 500px; padding: 30px 28px; }
+        #personDetail h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        #personDetail #personTitle { color: var(--primary-light); margin-bottom: 12px; }
+        #personDetail #personBio { line-height: 1.8; color: #3D322B; }
+        #personDetail #personRelation {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: #7A6B5F;
+        }
+
+        /* ===== 10. 家谱 U型布局 ===== */
+        #familyTree {
+            width: 100%;
+            min-height: 650px;
+            background: #fcf8f2;
+            border-radius: 20px;
+            padding: 30px 10px 20px;
+            position: relative;
+            overflow: auto;
+            box-shadow: inset 0 2px 20px rgba(0,0,0,0.03);
+        }
+        .utree-container {
+            position: relative;
+            width: 100%;
+            min-height: 600px;
+        }
+        .utree-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .utree-nodes {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+        }
+        .uperson-node {
+            position: absolute;
+            background: #fff;
+            border: 2px solid #dcc5a0;
+            border-radius: 12px;
+            padding: 8px 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            min-height: 60px;
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+            line-height: 1.3;
+        }
+        .uperson-node:hover {
+            transform: translate(-50%, -50%) scale(1.08);
+            border-color: #7A4B2C;
+            box-shadow: 0 8px 24px rgba(122,75,44,0.18);
+            z-index: 5;
+        }
+        .uperson-node .uname {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #2C241E;
+        }
+        .uperson-node .utitle {
+            font-size: 0.65rem;
+            color: #7A6B5F;
+            margin-top: 1px;
+        }
+        .uperson-node .ugeneration {
+            font-size: 0.55rem;
+            background: #dcc5a0;
+            padding: 1px 10px;
+            border-radius: 12px;
+            color: #2C241E;
+            margin-top: 2px;
+        }
+        .uperson-node .uspouse {
+            font-size: 0.55rem;
+            background: #f0e6d8;
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-top: 2px;
+        }
+        .uroot-node {
+            border-color: #7A4B2C !important;
+            background: #f5ede4 !important;
+            box-shadow: 0 0 0 5px rgba(122,75,44,0.12) !important;
+            padding: 14px 24px !important;
+            min-width: 120px !important;
+        }
+        .uroot-node .uname {
+            font-size: 1.5rem !important;
+            font-weight: 900 !important;
+            color: #7A4B2C !important;
+        }
+        .uperson-node.highlight {
+            border-color: #D4A843 !important;
+            background: #FFF8E7 !important;
+            box-shadow: 0 0 0 4px rgba(212,168,67,0.25) !important;
+            z-index: 6;
+        }
+        .uperson-node.highlight .uname { color: #8B6B2A !important; }
+
+        /* ===== 11. 页脚 ===== */
+        .footer {
+            background: #2C241E;
+            color: #D4C9BE;
+            padding: 50px 0 30px;
+            margin-top: 20px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer h4 { color: #fff; font-family: var(--font-serif); margin-bottom: 16px; }
+        .footer p { opacity: 0.7; font-size: 0.95rem; max-width: 300px; }
+        .footer ul { list-style: none; }
+        .footer ul li { margin-bottom: 10px; }
+        .footer ul a { opacity: 0.7; transition: var(--transition); }
+        .footer ul a:hover { opacity: 1; color: var(--secondary); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 24px;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        /* ===== 12. 响应式 ===== */
+        @media (max-width: 992px) {
+            .hero-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-text p { margin-left: auto; margin-right: auto; }
+            .hero-buttons { justify-content: center; }
+            .story-block { grid-template-columns: 1fr; text-align: center; }
+            .story-block .quote {
+                border-left: none;
+                border-top: 4px solid var(--primary);
+                padding-left: 0;
+                padding-top: 20px;
+            }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            #familyTree { min-height: 550px; }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: rgba(253, 248, 242, 0.98);
+                backdrop-filter: blur(12px);
+                padding: 24px;
+                gap: 18px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+                border-bottom: 1px solid #e0d0bc;
+            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: flex; }
+            .hero-text h1 { font-size: 2.4rem; }
+            .section-title { font-size: 2rem; }
+            .heritage-grid { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .story-block { padding: 30px 20px; }
+            #familyTree { min-height: 480px; }
+            .uperson-node { min-width: 60px; min-height: 48px; padding: 5px 8px; }
+            .uperson-node .uname { font-size: 0.85rem; }
+            .uperson-node .utitle { font-size: 0.55rem; }
+            .uroot-node .uname { font-size: 1.2rem !important; }
+        }
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 1.8rem; }
+            .btn { padding: 10px 24px; font-size: 0.9rem; }
+            .heritage-grid { grid-template-columns: 1fr; }
+            .card-grid { grid-template-columns: 1fr; gap: 16px; }
+            .village-card-content { padding: 14px 16px 18px; }
+            .village-card-content h3 { font-size: 1.1rem; word-break: break-word; }
+            .village-card-content .location { font-size: 0.8rem; }
+            .village-card-content p { font-size: 0.85rem; }
+            .village-card-img { height: 140px; }
+            .container { padding: 0 12px; }
+            .modal-content { max-width: 98%; border-radius: 12px; }
+            .modal-caption { padding: 14px 18px; }
+            .modal-caption h3 { font-size: 1.2rem; }
+            .modal-close { top: 10px; right: 18px; font-size: 2.5rem; }
+            .carousel-btn { font-size: 1.5rem; padding: 6px 12px; }
+            .carousel-btn.prev { left: 6px; }
+            .carousel-btn.next { right: 6px; }
+            .heritage-detail { padding: 28px 20px; margin: 10px; }
+            .heritage-detail-icon { font-size: 3.6rem; }
+            .heritage-detail h2 { font-size: 1.6rem; }
+            #familyTree { min-height: 420px; padding: 15px 5px; }
+            .uperson-node { min-width: 48px; min-height: 40px; padding: 4px 6px; }
+            .uperson-node .uname { font-size: 0.7rem; }
+            .uperson-node .utitle { font-size: 0.5rem; }
+            .uroot-node { padding: 8px 12px !important; min-width: 70px !important; }
+            .uroot-node .uname { font-size: 1rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== 导航 ===== -->
+<header class="header">
+    <div class="container nav">
+        <div class="logo"><span>🏯</span> 古村遗韵</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#villages">村落图鉴</a></li>
+            <li><a href="#heritage">文化遗产</a></li>
+            <li><a href="#genealogy">📜 家谱</a></li>
+            <li><a href="#story">口述记忆</a></li>
+            <li><a href="#interact">文脉互动</a></li>
+            <li><a href="#footer" class="nav-cta">守护传承</a></li>
+        </ul>
+        <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- ===== 英雄区 ===== -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <h1>守护千年记忆，<br>传承乡土<em>文脉</em></h1>
+            <p>聚焦传统村落的文化遗存、建筑美学与活态民俗，用数字技术为即将远去的乡土中国立传。</p>
+            <div class="hero-buttons">
+                <a href="#villages" class="btn btn-primary">🏮 探索村落</a>
+                <a href="#story" class="btn btn-outline">🎙️ 倾听口述</a>
+            </div>
+        </div>
+        <div class="hero-image" style="background-image: url('卧龙台老槐树.jpg');">
+            <span class="hero-image-caption">📸 晋 · 大阳古村</span>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 村落图鉴 ===== -->
+<section class="section-padding" id="villages">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">村落图鉴</h2>
+            <p class="section-subtitle">每一座古村，都是一部活着的史书。从建筑到习俗，留存最后的乡土记忆。</p>
+        </div>
+        <div class="card-grid">
+            <div class="village-card" data-images="大阳村图鉴\大阳建筑类\截屏_20180610_192356.jpg, images/dayang2.jpg, images/dayang3.jpg">
+                <div class="village-card-img" style="background-image: url('门洞.jpg');">
+                    <span class="village-card-tag">⭐ 经典</span>
+                </div>
+                <div class="village-card-content">
+                    <h3>清代 · 画里乡村</h3>
+                    <div class="location">📍 山西 · 大阳</div>
+                    <p>南湖春晓，月沼如镜。徽派建筑与水利系统的完美结合，世界文化遗产地。</p>
+                    <div class="meta"><span>🏛️ 明清建筑 137栋</span><span>📜 非遗 4项</span></div>
+                </div>
+            </div>
+            <div class="village-card" data-images="images/dayang4.jpg, images/dayang5.jpg">
+                <div class="village-card-img" style="background-image: url('文化讲述.jpg');">
+                    <span class="village-card-tag">🌿 静谧</span>
+                </div>
+                <div class="village-card-content">
+                    <h3>原平 · 大阳古村</h3>
+                    <div class="location">📍 大阳村 · 大队</div>
+                    <p>江南水乡的封面，桥街相连，深宅大院，茅盾故里，活态的民俗博物馆。</p>
+                    <div class="meta"><span>🌉 古桥 72座</span><span>🎭 民俗 8项</span></div>
+                </div>
+            </div>
+            <div class="village-card" data-images="images/dayang6.jpg, images/dayang7.jpg, images/dayang8.jpg">
+                <div class="village-card-img" style="background-image: url('庙门.jpg');">
+                    <span class="village-card-tag">🏔️ 原生态</span>
+                </div>
+                <div class="village-card-content">
+                    <h3>塔楼 · 鼓楼</h3>
+                    <div class="location">📍 大阳文化 · 村西</div>
+                    <p>五大鼓楼、五座花桥，侗族大歌响彻山谷，人类非物质文化遗产代表作。</p>
+                    <div class="meta"><span>🥁 鼓楼 5座</span><span>🎵 非遗 6项</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 文化遗产 ===== -->
+<section class="section-padding" style="background: #F4EDE4;" id="heritage">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">文化遗产分类</h2>
+            <p class="section-subtitle">从有形到无形，构建多维度的村落文化知识图谱。</p>
+        </div>
+        <div class="heritage-grid">
+            <div class="heritage-item"><div class="icon">🏛️</div><h4>传统建筑</h4><p>祠堂、庙宇、民居、古桥，承载营建智慧与家族记忆。</p></div>
+            <div class="heritage-item"><div class="icon">🎭</div><h4>民俗非遗</h4><p>戏曲、节庆、手工艺、方言，活态传承的乡土基因。</p></div>
+            <div class="heritage-item"><div class="icon">📜</div><h4>文献典籍</h4><p>家谱、碑刻、契约、祖训，纸墨间的村落历史。</p></div>
+            <div class="heritage-item"><div class="icon">🌾</div><h4>农耕景观</h4><p>梯田、水系、古树、古道，人与自然共生的智慧。</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 家谱 U型布局 ===== -->
+<section class="section-padding" id="genealogy" style="background: #F9F5EF;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">📜 大阳村 · 家谱世系</h2>
+            <p class="section-subtitle">追溯血脉源流，铭记先祖遗训。点击人物查看生平，U型布局一览世代传承。</p>
+        </div>
+        <div id="familyTree"></div>
+        <div style="text-align: center; margin-top: 30px;">
+            <input type="text" id="genealogySearch" placeholder="🔍 输入姓名搜索先祖..." 
+                   style="padding: 12px 24px; border-radius: 40px; border: 2px solid #DCC5A0; width: 280px; max-width: 80%; font-size: 1rem; outline: none; transition: 0.3s;"
+                   onfocus="this.style.borderColor='#7A4B2C'" onblur="this.style.borderColor='#DCC5A0'">
+            <button onclick="window.searchGenealogy()" style="padding: 12px 28px; border-radius: 40px; border: none; background: var(--primary); color: #fff; font-weight: 600; cursor: pointer; margin-left: 10px; transition: 0.3s;" onmouseover="this.style.background='#2F5D4A'" onmouseout="this.style.background='#7A4B2C'">搜索</button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 口述记忆 ===== -->
+<section class="section-padding" id="story">
+    <div class="container">
+        <div class="story-block" id="interact">
+            <div>
+                <h2>🎙️ 口述记忆 · 乡音未远</h2>
+                <p style="margin: 16px 0; opacity:0.8;">倾听老一辈传承人的声音，记录濒临消失的乡土故事。</p>
+                <div class="quote">“村里的老槐树倒了，但关于它的故事，还在我们的嘴里活着。”</div>
+                <button class="interact-btn" id="wisdomBtn">✨ 解锁文脉密码</button>
+            </div>
+            <div>
+                <div style="background: rgba(0,0,0,0.04); border-radius: 20px; padding: 16px; backdrop-filter: blur(2px);">
+                    <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+                        <span style="background: var(--primary); color: #fff; padding: 4px 12px; border-radius: 30px; font-size:0.8rem;">互动体验</span>
+                        <span style="font-size:0.9rem; opacity:0.7;">点击按钮，获取一句村落的古老智慧</span>
+                    </div>
+                    <div id="wisdom-display">🌿 点击上方按钮，聆听乡土的回响</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== 弹窗 ===== -->
+<div class="modal-overlay" id="imageModal">
+    <div class="modal-content">
+        <span class="modal-close" id="modalCloseBtn">&times;</span>
+        <div class="carousel-container">
+            <img id="modalImage" src="" alt="村落大图">
+            <button class="carousel-btn prev" id="prevBtn">❮</button>
+            <button class="carousel-btn next" id="nextBtn">❯</button>
+        </div>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <div class="modal-caption" id="modalCaption"><h3 id="modalTitle"></h3><p id="modalDesc"></p></div>
+    </div>
+</div>
+<div class="modal-overlay" id="heritageModal">
+    <div class="modal-content heritage-detail">
+        <span class="modal-close" id="heritageCloseBtn">&times;</span>
+        <div class="heritage-detail-content">
+            <div class="heritage-detail-icon" id="heritageIcon">🏛️</div>
+            <img id="heritageDetailImage" src="" alt="分类配图">
+            <h2 id="heritageDetailTitle">传统建筑</h2>
+            <div class="heritage-detail-body" id="heritageDetailBody">
+                <p>详细描述内容……</p>
+                <ul><li>代表村落：宏村、西递</li><li>典型特征：粉墙黛瓦、马头墙</li></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-overlay" id="personModal">
+    <div class="modal-content">
+        <span class="modal-close" id="personModalClose">&times;</span>
+        <div id="personDetail">
+            <h3 id="personName"></h3>
+            <p id="personTitle"></p>
+            <div id="personBio"></div>
+            <div id="personRelation"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 页脚 ===== -->
+<footer class="footer" id="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div><h4 style="font-size:1.5rem;">🏯 古村遗韵</h4><p>致力于传统村落文化的数字化保护与传承。每一行代码，都是文化传承的新注解。</p></div>
+            <div><h4>探索</h4><ul><li><a href="#villages">村落图鉴</a></li><li><a href="#heritage">文化遗产</a></li><li><a href="#genealogy">家谱世系</a></li><li><a href="#story">口述记忆</a></li></ul></div>
+            <div><h4>参与</h4><ul><li><a href="#">提交村落资料</a></li><li><a href="#">成为志愿者</a></li><li><a href="#">合作机构</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">© 2026 古村遗韵 · 大阳古村文化数字博物馆 | 用热爱守护乡土</div>
+    </div>
+</footer>
+
+<!-- ================================================================ -->
+<!-- JavaScript -->
+<!-- ================================================================ -->
+<script>
+(function() {
+    // ---- 1. 移动端菜单 ----
+    const toggleBtn = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (toggleBtn && navLinks) {
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+        document.addEventListener('click', function(event) {
+            if (!navLinks.contains(event.target) && !toggleBtn.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+
+    // ---- 2. 智慧箴言 ----
+    const wisdomBtn = document.getElementById('wisdomBtn');
+    const wisdomDisplay = document.getElementById('wisdom-display');
+    if (wisdomBtn && wisdomDisplay) {
+        const wisdoms = [
+            '🌾 "千担纸，万担粮，不如村里有个好祠堂。" —— 徽州谚语',
+            '🏮 "鼓楼通天，花桥接地，侗寨有了魂。" —— 侗族古训',
+            '📖 "修桥铺路，积德扬名；护树保水，福泽子孙。" —— 村规民约',
+            '🎋 "宁可食无肉，不可居无竹；宁可屋无华，不可庭无花。" —— 文人造园理念',
+            '🌊 "顺水而居，依山而建，这是祖先留给我们的风水。" —— 古村选址口诀',
+            '🧧 "年有三朝，月有十五，节有端午，村有社火。" —— 农耕节令',
+            '🌳 "古树是村落的活历史，每道年轮都是故事。" —— 乡野口述',
+            '🏡 "青砖黛瓦马头墙，回廊挂落花格窗。" —— 徽派建筑特色'
+        ];
+        let lastIndex = -1;
+        wisdomBtn.addEventListener('click', function() {
+            let randomIndex;
+            do { randomIndex = Math.floor(Math.random() * wisdoms.length); } 
+            while (randomIndex === lastIndex && wisdoms.length > 1);
+            lastIndex = randomIndex;
+            const selected = wisdoms[randomIndex];
+            wisdomDisplay.style.transition = 'opacity 0.3s';
+            wisdomDisplay.style.opacity = '0';
+            setTimeout(() => {
+                wisdomDisplay.textContent = selected;
+                wisdomDisplay.style.opacity = '1';
+            }, 200);
+        });
+    }
+
+    // ---- 3. 平滑滚动 ----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === "#" || href === "") return;
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+        });
+    });
+
+    // ---- 4. 卡片轮播 ----
+    const imageModal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalCloseBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('carouselDots');
+    let currentImages = [];
+    let currentIndex = 0;
+
+    function updateModalImage(index) {
+        if (currentImages.length === 0) return;
+        if (index < 0) index = 0;
+        if (index >= currentImages.length) index = currentImages.length - 1;
+        currentIndex = index;
+        modalImg.src = currentImages[currentIndex];
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+        if (currentImages.length <= 1) {
+            prevBtn.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+        } else {
+            prevBtn.classList.remove('hidden');
+            nextBtn.classList.remove('hidden');
+        }
+    }
+
+    const cards = document.querySelectorAll('.village-card');
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            const imagesAttr = this.getAttribute('data-images');
+            let imageList = [];
+            if (imagesAttr) {
+                imageList = imagesAttr.split(',').map(path => path.trim());
+            } else {
+                const imgDiv = this.querySelector('.village-card-img');
+                let bgUrl = '';
+                const style = imgDiv.getAttribute('style');
+                if (style) {
+                    const match = style.match(/url\(['"]?([^'"]+)['"]?\)/);
+                    if (match) bgUrl = match[1];
+                }
+                const dataImg = this.getAttribute('data-image');
+                if (dataImg) bgUrl = dataImg;
+                if (bgUrl) imageList = [bgUrl];
+            }
+            if (imageList.length === 0) {
+                imageList = ['data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23b89b7a"/><text x="200" y="160" font-size="24" fill="%23fff" text-anchor="middle">古村影像</text></svg>'];
+            }
+            currentImages = imageList;
+            currentIndex = 0;
+            modalTitle.innerText = this.querySelector('h3')?.innerText || '古村落';
+            modalDesc.innerText = this.querySelector('p')?.innerText || '';
+            dotsContainer.innerHTML = '';
+            currentImages.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => updateModalImage(i));
+                dotsContainer.appendChild(dot);
+            });
+            updateModalImage(0);
+            imageModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    prevBtn.addEventListener('click', function(e) { e.stopPropagation(); updateModalImage(currentIndex - 1); });
+    nextBtn.addEventListener('click', function(e) { e.stopPropagation(); updateModalImage(currentIndex + 1); });
+    document.addEventListener('keydown', function(e) {
+        if (imageModal.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); updateModalImage(currentIndex - 1); }
+            else if (e.key === 'ArrowRight') { e.preventDefault(); updateModalImage(currentIndex + 1); }
+        }
+    });
+
+    function closeImageModal() {
+        imageModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    modalClose.addEventListener('click', closeImageModal);
+    imageModal.addEventListener('click', function(e) { if (e.target === this) closeImageModal(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imageModal.style.display === 'flex') closeImageModal();
+    });
+
+    // ---- 5. 文化遗产 ----
+    const heritageModal = document.getElementById('heritageModal');
+    const heritageClose = document.getElementById('heritageCloseBtn');
+    const iconEl = document.getElementById('heritageIcon');
+    const titleEl = document.getElementById('heritageDetailTitle');
+    const bodyEl = document.getElementById('heritageDetailBody');
+    const detailImg = document.getElementById('heritageDetailImage');
+
+    const heritageData = {
+        '传统建筑': {
+            icon: '🏛️',
+            image: 'images/traditional_building.jpg',
+            detail: '传统建筑是村落文化的物质载体，包括祠堂、庙宇、民居、古桥、牌坊等。它们承载着家族的荣耀、信仰的寄托和匠人的智慧。',
+            examples: ['宏村 · 承志堂', '西递 · 敬爱堂', '福建土楼', '开平碉楼']
+        },
+        '民俗非遗': {
+            icon: '🎭',
+            image: 'images/folk_culture.jpg',
+            detail: '民俗非遗是村落活态的文化基因，包括戏曲、节庆、手工艺、方言、饮食习俗等。它们一代代口传身授，是乡土社会的"精神密码"。',
+            examples: ['京剧', '侗族大歌', '剪纸', '龙舟竞渡']
+        },
+        '文献典籍': {
+            icon: '📜',
+            image: 'images/literature.jpg',
+            detail: '文献典籍是村落历史的"纸上博物馆"，涵盖家谱、碑刻、契约、祖训、地方志等。它们是研究家族变迁、乡村治理的第一手资料。',
+            examples: ['《宏村汪氏宗谱》', '《西递明经胡氏宗谱》', '徽州文书', '清水江文书']
+        },
+        '农耕景观': {
+            icon: '🌾',
+            image: 'images/agriculture.jpg',
+            detail: '农耕景观是人与自然和谐共生的智慧结晶，包括梯田、水系、古树、古道、稻田等。它们体现了"天人合一"的生态理念。',
+            examples: ['元阳梯田', '龙脊梯田', '都江堰灌区', '桑基鱼塘']
+        }
+    };
+
+    const heritageItems = document.querySelectorAll('.heritage-item');
+    heritageItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const title = this.querySelector('h4')?.innerText.trim() || '';
+            const data = heritageData[title];
+            if (!data) {
+                iconEl.textContent = '📚';
+                titleEl.textContent = title || '文化遗产';
+                bodyEl.innerHTML = '<p>该分类的详细资料正在整理中，敬请期待。</p>';
+                detailImg.style.display = 'none';
+            } else {
+                iconEl.textContent = data.icon;
+                titleEl.textContent = title;
+                if (data.image) { detailImg.src = data.image; detailImg.style.display = 'block'; } 
+                else { detailImg.style.display = 'none'; }
+                let html = `<p>${data.detail}</p>`;
+                if (data.examples && data.examples.length) {
+                    html += `<ul>${data.examples.map(ex => `<li>${ex}</li>`).join('')}</ul>`;
+                }
+                bodyEl.innerHTML = html;
+            }
+            heritageModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeHeritageModal() {
+        heritageModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    heritageClose.addEventListener('click', closeHeritageModal);
+    heritageModal.addEventListener('click', function(e) { if (e.target === this) closeHeritageModal(); });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && heritageModal.style.display === 'flex') closeHeritageModal();
+    });
+
+    // ============================================================
+    // 6. 家谱 U型布局（智能宽度，防止重叠）
+    // ============================================================
+    let genealogyData = [];
+
+    function buildTree(data) {
+        if (!data || data.length === 0) return [];
+        const map = {};
+        data.forEach(p => map[p.id] = { ...p, children: [] });
+        data.forEach(p => {
+            if (p.children && p.children.length) {
+                p.children.forEach(cid => {
+                    if (map[cid]) map[p.id].children.push(map[cid]);
+                });
+            }
+        });
+        const childIds = new Set();
+        data.forEach(p => {
+            if (p.children) p.children.forEach(cid => childIds.add(cid));
+        });
+        return data.filter(p => !childIds.has(p.id)).map(p => map[p.id]);
+    }
+
+    // 智能U型布局：动态计算每层宽度，确保节点不重叠
+    function calculateUPositions(root) {
+        const positions = {};
+        const nodeWidth = 140;
+        const nodeHeight = 70;
+        const levelGap = 130; // 垂直间距
+
+        // 收集层级
+        const levels = [];
+        function collectLevels(node, level) {
+            if (!levels[level]) levels[level] = [];
+            levels[level].push(node);
+            if (node.children) {
+                node.children.forEach(child => collectLevels(child, level + 1));
+            }
+        }
+        collectLevels(root, 0);
+        const maxLevel = levels.length - 1;
+
+        // 计算每层宽度：基于节点数量动态决定
+        const layerWidths = [];
+        for (let i = 0; i <= maxLevel; i++) {
+            const count = levels[i] ? levels[i].length : 1;
+            // 基础宽度：越底部越宽，同时保证每个节点至少200px宽度（含间距）
+            const minNodeWidth = 200;
+            const baseWidth = count * minNodeWidth + 60;
+            // 但也要有最低宽度，防止顶层过窄
+            let finalWidth = Math.max(baseWidth, 400);
+            // 对于底层，进一步扩大（U型）
+            if (i >= 3) {
+                finalWidth = finalWidth * 1.5;
+            }
+            layerWidths[i] = finalWidth;
+        }
+
+        // 保证U型：每一层宽度 ≥ 上一层宽度 * 1.2
+        for (let i = 1; i <= maxLevel; i++) {
+            if (layerWidths[i] < layerWidths[i-1] * 1.2) {
+                layerWidths[i] = layerWidths[i-1] * 1.2;
+            }
+        }
+
+        // 分配坐标
+        levels.forEach((nodes, level) => {
+            if (!nodes || nodes.length === 0) return;
+            const count = nodes.length;
+            const totalWidth = layerWidths[level] || 400;
+            const startX = -totalWidth / 2;
+            nodes.forEach((node, index) => {
+                const x = startX + (index + 0.5) * (totalWidth / count);
+                const y = level * levelGap;
+                positions[node.id] = { x, y, level };
+            });
+        });
+
+        // 居中
+        let minX = Infinity, maxX = -Infinity, maxY = 0;
+        Object.values(positions).forEach(p => {
+            if (p.x < minX) minX = p.x;
+            if (p.x > maxX) maxX = p.x;
+            if (p.y > maxY) maxY = p.y;
+        });
+        const rangeX = maxX - minX || 1;
+        const centerX = (minX + maxX) / 2;
+        const containerWidth = Math.max(rangeX + nodeWidth + 80, 600);
+        const containerHeight = maxY + nodeHeight + 80;
+        const offsetX = containerWidth / 2 - centerX;
+        Object.values(positions).forEach(p => {
+            p.x += offsetX;
+            p.y += 50;
+        });
+
+        return { positions, containerWidth, containerHeight };
+    }
+
+    function renderUTree(roots) {
+        const container = document.getElementById('familyTree');
+        if (!container) return;
+        if (!roots || roots.length === 0) {
+            container.innerHTML = '<p style="text-align:center;color:#7A6B5F;padding:40px 0;">📖 暂无家谱数据</p>';
+            return;
+        }
+        const root = roots[0];
+        if (!root) return;
+
+        const { positions, containerWidth, containerHeight } = calculateUPositions(root);
+        const nodeWidth = 140;
+        const nodeHeight = 70;
+
+        // 生成连线
+        let svgLines = `<svg class="utree-lines" style="width:${containerWidth}px;height:${containerHeight}px;">`;
+        function drawLines(node) {
+            if (!node.children) return;
+            node.children.forEach(child => {
+                const p1 = positions[node.id];
+                const p2 = positions[child.id];
+                if (!p1 || !p2) return;
+                const x1 = p1.x;
+                const y1 = p1.y + nodeHeight / 2;
+                const x2 = p2.x;
+                const y2 = p2.y - nodeHeight / 2;
+                const midY = (y1 + y2) / 2;
+                svgLines += `<path d="M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}" 
+                           fill="none" stroke="#b89b7a" stroke-width="2.5" stroke-linejoin="round" stroke-opacity="0.7"/>`;
+                drawLines(child);
+            });
+        }
+        drawLines(root);
+        svgLines += `</svg>`;
+
+        // 生成节点
+        let nodesHtml = `<div class="utree-nodes" style="width:${containerWidth}px;height:${containerHeight}px;">`;
+        function drawNodes(node) {
+            const pos = positions[node.id];
+            if (!pos) return;
+            const isRoot = node.id === root.id;
+            const rootClass = isRoot ? ' uroot-node' : '';
+            nodesHtml += `<div class="uperson-node${rootClass}" style="left:${pos.x}px;top:${pos.y}px;" data-id="${node.id}" onclick="window.showPersonDetail(${node.id})">`;
+            nodesHtml += `<span class="uname">${node.name}</span>`;
+            if (node.title) nodesHtml += `<span class="utitle">${node.title}</span>`;
+            if (node.generation) nodesHtml += `<span class="ugeneration">${node.generation}</span>`;
+            if (node.spouse) nodesHtml += `<span class="uspouse">💑 ${node.spouse}</span>`;
+            nodesHtml += `</div>`;
+            if (node.children) {
+                node.children.forEach(child => drawNodes(child));
+            }
+        }
+        drawNodes(root);
+        nodesHtml += `</div>`;
+
+        container.innerHTML = `
+            <div class="utree-container" style="width:${containerWidth}px;min-height:${containerHeight}px;">
+                ${svgLines}
+                ${nodesHtml}
+            </div>
+        `;
+    }
+
+    // 加载家谱数据
+    function loadGenealogy() {
+        return fetch('家谱.json')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP错误: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                genealogyData = data;
+                const roots = buildTree(genealogyData);
+                renderUTree(roots);
+                console.log('✅ U型家谱加载成功，共 ' + data.length + ' 位人物');
+            })
+            .catch(error => {
+                console.error('❌ 家谱加载失败:', error);
+                const container = document.getElementById('familyTree');
+                if (container) {
+                    container.innerHTML = `
+                        <p style="text-align:center;color:#c0392b;padding:40px 0;">
+                            ⚠️ 家谱数据加载失败：${error.message}<br>
+                            <span style="font-size:0.9rem;color:#7A6B5F;">请确保家谱.json文件存在且格式正确，并使用 Live Server 打开。</span>
+                        </p>
+                    `;
+                }
+            });
+    }
+
+    window.showPersonDetail = function(id) {
+        const person = genealogyData.find(p => p.id === id);
+        if (!person) { alert('未找到该人物信息'); return; }
+        const modal = document.getElementById('personModal');
+        if (!modal) return;
+        document.getElementById('personName').textContent = person.name;
+        document.getElementById('personTitle').textContent = `${person.generation || ''} · ${person.title || ''}`;
+        let bioHtml = `<p>${person.bio || '暂无详细记载。'}</p>`;
+        if (person.spouse) bioHtml += `<p style="margin-top:8px;"><strong>配偶：</strong>${person.spouse}</p>`;
+        if (person.children && person.children.length > 0) {
+            const childNames = person.children.map(cid => {
+                const child = genealogyData.find(p => p.id === cid);
+                return child ? child.name : '';
+            }).filter(Boolean).join('、');
+            if (childNames) bioHtml += `<p><strong>子女：</strong>${childNames}</p>`;
+        }
+        document.getElementById('personBio').innerHTML = bioHtml;
+        document.getElementById('personRelation').innerHTML = '📖 点击其他人物可查看详细生平。';
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+
+    (function initPersonModal() {
+        const modal = document.getElementById('personModal');
+        const closeBtn = document.getElementById('personModalClose');
+        if (modal && closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+    })();
+
+    window.searchGenealogy = function() {
+        const input = document.getElementById('genealogySearch');
+        if (!input) return;
+        const keyword = input.value.trim();
+        if (!keyword) {
+            const roots = buildTree(genealogyData);
+            renderUTree(roots);
+            return;
+        }
+        const matched = genealogyData.filter(p =>
+            p.name.includes(keyword) || (p.title && p.title.includes(keyword))
+        );
+        if (matched.length === 0) {
+            alert('未找到相关人物，请尝试其他关键词。');
+            return;
+        }
+        const roots = buildTree(genealogyData);
+        renderUTree(roots);
+        setTimeout(() => {
+            const target = document.querySelector(`.uperson-node[data-id="${matched[0].id}"]`);
+            if (target) {
+                target.classList.add('highlight');
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 100);
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadGenealogy();
+        const searchInput = document.getElementById('genealogySearch');
+        if (searchInput) {
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') window.searchGenealogy();
+            });
+        }
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (genealogyData.length > 0) {
+                    const roots = buildTree(genealogyData);
+                    renderUTree(roots);
+                }
+            }, 400);
+        });
+    });
+
+})();
+</script>
+</body>
+</html>
