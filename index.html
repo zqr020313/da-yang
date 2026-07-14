@@ -671,6 +671,56 @@
             z-index: 6;
         }
         .uperson-node.highlight .uname { color: #8B6B2A !important; }
+        /* ===== 父子高亮样式 ===== */
+
+/* 本人：金色发光 */
+.hl-self {
+    border-color: #D69E2E !important;
+    background: #FFFAF0 !important;
+    box-shadow: 0 0 0 4px rgba(214, 158, 46, 0.4), 0 0 20px rgba(214, 158, 46, 0.2) !important;
+    transform: translate(-50%, -50%) scale(1.12) !important;
+    z-index: 10 !important;
+}
+.hl-self .uname {
+    color: #7A4B2C !important;
+    font-weight: 900 !important;
+    font-size: 1.1rem !important;
+}
+
+/* 父节点：蓝色边框 */
+.hl-parent {
+    border-color: #2B6CB0 !important;
+    border-width: 3px !important;
+    background: #EBF8FF !important;
+    box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.2) !important;
+}
+.hl-parent .uname {
+    color: #2B6CB0 !important;
+    font-weight: 700 !important;
+}
+
+/* 子节点：绿色边框 */
+.hl-child {
+    border-color: #276749 !important;
+    border-width: 3px !important;
+    background: #F0FFF4 !important;
+    box-shadow: 0 0 0 3px rgba(39, 103, 73, 0.2) !important;
+}
+.hl-child .uname {
+    color: #276749 !important;
+    font-weight: 700 !important;
+}
+
+/* 其他节点：变淡 */
+.hl-dim {
+    opacity: 0.35 !important;
+    filter: grayscale(0.4) !important;
+    transition: opacity 0.3s, filter 0.3s !important;
+    pointer-events: none !important;
+}
+.hl-dim:hover {
+    opacity: 0.5 !important;
+}
 
         /* ===== 11. 页脚 ===== */
         .footer {
@@ -743,33 +793,267 @@
             .uroot-node .uname { font-size: 1.2rem !important; }
         }
         @media (max-width: 480px) {
-            .hero-text h1 { font-size: 1.8rem; }
-            .btn { padding: 10px 24px; font-size: 0.9rem; }
-            .heritage-grid { grid-template-columns: 1fr; }
-            .card-grid { grid-template-columns: 1fr; gap: 16px; }
-            .village-card-content { padding: 14px 16px 18px; }
-            .village-card-content h3 { font-size: 1.1rem; word-break: break-word; }
-            .village-card-content .location { font-size: 0.8rem; }
-            .village-card-content p { font-size: 0.85rem; }
-            .village-card-img { height: 140px; }
-            .container { padding: 0 12px; }
-            .modal-content { max-width: 98%; border-radius: 12px; }
-            .modal-caption { padding: 14px 18px; }
-            .modal-caption h3 { font-size: 1.2rem; }
-            .modal-close { top: 10px; right: 18px; font-size: 2.5rem; }
-            .carousel-btn { font-size: 1.5rem; padding: 6px 12px; }
-            .carousel-btn.prev { left: 6px; }
-            .carousel-btn.next { right: 6px; }
-            .heritage-detail { padding: 28px 20px; margin: 10px; }
-            .heritage-detail-icon { font-size: 3.6rem; }
-            .heritage-detail h2 { font-size: 1.6rem; }
-            #familyTree { min-height: 420px; padding: 15px 5px; }
-            .uperson-node { min-width: 48px; min-height: 40px; padding: 4px 6px; }
-            .uperson-node .uname { font-size: 0.7rem; }
-            .uperson-node .utitle { font-size: 0.5rem; }
-            .uroot-node { padding: 8px 12px !important; min-width: 70px !important; }
-            .uroot-node .uname { font-size: 1rem !important; }
-        }
+    /* ----- 全局容器内边距 ----- */
+    .container {
+        padding: 0 12px;
+    }
+
+    /* ----- 英雄区 ----- */
+    .hero-text h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+    .hero-text p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+    .hero-image-caption {
+        font-size: 0.65rem;
+        padding: 4px 12px;
+        bottom: 10px;
+        left: 10px;
+    }
+
+    /* ----- 通用标题 ----- */
+    .section-title {
+        font-size: 1.6rem;
+    }
+    .section-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+    }
+    .section-padding {
+        padding: 40px 0;
+    }
+
+    /* ----- 村落卡片 ----- */
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .village-card-img {
+        height: 140px;
+    }
+    .village-card-content {
+        padding: 14px 16px 18px;
+    }
+    .village-card-content h3 {
+        font-size: 1.1rem;
+        word-break: break-word;
+    }
+    .village-card-content .location {
+        font-size: 0.8rem;
+    }
+    .village-card-content p {
+        font-size: 0.85rem;
+    }
+    .village-card-content .meta {
+        font-size: 0.75rem;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .village-card-tag {
+        font-size: 0.65rem;
+        padding: 2px 10px;
+        top: 10px;
+        left: 10px;
+    }
+
+    /* ----- 文化遗产分类 ----- */
+    .heritage-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+    .heritage-item {
+        padding: 18px 12px;
+    }
+    .heritage-item .icon {
+        font-size: 2.2rem;
+        margin-bottom: 6px;
+    }
+    .heritage-item h4 {
+        font-size: 1rem;
+    }
+    .heritage-item p {
+        font-size: 0.8rem;
+    }
+
+    /* ----- 口述记忆 ----- */
+    .story-block {
+        grid-template-columns: 1fr;
+        padding: 24px 18px;
+        gap: 20px;
+        text-align: center;
+    }
+    .story-block h2 {
+        font-size: 1.4rem;
+    }
+    .story-block .quote {
+        font-size: 0.95rem;
+        padding-left: 0;
+        border-left: none;
+        border-top: 3px solid var(--primary);
+        padding-top: 14px;
+    }
+    .interact-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    #wisdom-display {
+        font-size: 1rem;
+        padding: 14px 18px;
+        min-height: 60px;
+        border-radius: 30px;
+    }
+
+    /* ----- 弹窗（卡片大图 + 文化遗产 + 人物） ----- */
+    .modal-content {
+        max-width: 96%;
+        border-radius: 12px;
+    }
+    .modal-close {
+        top: 8px;
+        right: 16px;
+        font-size: 2.2rem;
+    }
+    .modal-caption {
+        padding: 12px 16px;
+    }
+    .modal-caption h3 {
+        font-size: 1.1rem;
+    }
+    .modal-caption p {
+        font-size: 0.9rem;
+    }
+
+    /* 轮播按钮 */
+    .carousel-btn {
+        font-size: 1.4rem;
+        padding: 6px 10px;
+    }
+    .carousel-btn.prev {
+        left: 4px;
+    }
+    .carousel-btn.next {
+        right: 4px;
+    }
+    .carousel-dots .dot {
+        width: 8px;
+        height: 8px;
+        margin: 0 3px;
+    }
+
+    /* 文化遗产详情弹窗 */
+    .heritage-detail {
+        padding: 24px 16px;
+        margin: 8px;
+    }
+    .heritage-detail-icon {
+        font-size: 3.2rem;
+    }
+    .heritage-detail h2 {
+        font-size: 1.4rem;
+    }
+    .heritage-detail-body {
+        font-size: 0.9rem;
+    }
+    #heritageDetailImage {
+        max-height: 140px;
+        margin: 8px 0;
+    }
+
+    /* 人物详情弹窗 */
+    #personModal .modal-content {
+        padding: 20px 16px;
+    }
+    #personDetail h3 {
+        font-size: 1.4rem;
+    }
+    #personDetail #personTitle {
+        font-size: 0.9rem;
+    }
+    #personDetail #personBio {
+        font-size: 0.9rem;
+    }
+
+    /* ----- 家谱 U型布局（关键调整） ----- */
+    #familyTree {
+        min-height: 450px;
+        padding: 12px 4px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    /* 家谱节点缩放 */
+    .uperson-node {
+        min-width: 50px !important;
+        min-height: 38px !important;
+        padding: 4px 6px !important;
+        border-width: 1.5px;
+    }
+    .uperson-node .uname {
+        font-size: 0.7rem !important;
+    }
+    .uperson-node .utitle {
+        font-size: 0.5rem !important;
+    }
+    .uperson-node .ugeneration {
+        font-size: 0.5rem !important;
+        padding: 0 6px;
+    }
+    .uperson-node .uspouse {
+        font-size: 0.5rem !important;
+        padding: 0 6px;
+    }
+    .uroot-node {
+        padding: 6px 10px !important;
+        min-width: 70px !important;
+    }
+    .uroot-node .uname {
+        font-size: 1rem !important;
+    }
+    /* 连线 SVG 自适应 */
+    .utree-lines svg {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* ----- 搜索框 ----- */
+    #genealogySearch {
+        width: 200px;
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
+    #genealogySearch + button {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        margin-left: 6px;
+    }
+
+    /* ----- 页脚 ----- */
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .footer p {
+        font-size: 0.85rem;
+    }
+    .footer-bottom {
+        font-size: 0.75rem;
+    }
+
+    /* ----- 导航菜单（已有，但加强点击区域） ----- */
+    .nav-links a {
+        padding: 10px 0;
+        font-size: 1rem;
+    }
+    .nav-cta {
+        padding: 10px 20px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -965,6 +1249,40 @@
 <!-- JavaScript -->
 <!-- ================================================================ -->
 <script>
+    // ---- 高亮状态管理 ----
+let highlightState = {
+    targetId: null,      // 当前选中的人
+    parentId: null,      // 其父节点ID
+    childIds: []         // 其子节点ID列表
+};
+
+// 清除高亮
+function clearHighlight() {
+    highlightState = { targetId: null, parentId: null, childIds: [] };
+    // 重新渲染家谱
+    const roots = buildTree(genealogyData);
+    renderUTree(roots);
+}
+
+// 获取节点的CSS高亮类
+function getHighlightClass(nodeId) {
+    if (!highlightState.targetId) return '';
+    if (nodeId === highlightState.targetId) return 'hl-self';
+    if (nodeId === highlightState.parentId) return 'hl-parent';
+    if (highlightState.childIds.includes(nodeId)) return 'hl-child';
+    return 'hl-dim';
+}
+// 跳转到某人并高亮
+window.jumpToPerson = function(id) {
+    // 关闭弹窗
+    const modal = document.getElementById('personModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    // 触发高亮
+    window.showPersonDetail(id);
+};
 (function() {
     // ---- 1. 移动端菜单 ----
     const toggleBtn = document.getElementById('menuToggle');
@@ -1308,6 +1626,52 @@
                 const p1 = positions[node.id];
                 const p2 = positions[child.id];
                 if (!p1 || !p2) return;
+                function drawLines(node) {
+    if (!node.children) return;
+    node.children.forEach(child => {
+        const p1 = positions[node.id];
+        const p2 = positions[child.id];
+        if (!p1 || !p2) return;
+        
+        // 判断连线类型
+        let strokeColor = '#b89b7a';
+        let strokeWidth = '2.5';
+        let strokeOpacity = '0.6';
+        
+        // 如果正在高亮状态
+        if (highlightState.targetId) {
+            const isParent = (node.id === highlightState.parentId && child.id === highlightState.targetId);
+            const isChild = (node.id === highlightState.targetId && highlightState.childIds.includes(child.id));
+            const isSelf = (node.id === highlightState.targetId);
+            
+            if (isParent) {
+                strokeColor = '#2B6CB0';
+                strokeWidth = '4';
+                strokeOpacity = '1';
+            } else if (isChild) {
+                strokeColor = '#276749';
+                strokeWidth = '4';
+                strokeOpacity = '1';
+            } else if (isSelf) {
+                strokeColor = '#D69E2E';
+                strokeWidth = '3.5';
+                strokeOpacity = '0.9';
+            } else {
+                // 其他连线变淡
+                strokeOpacity = '0.2';
+            }
+        }
+        
+        const x1 = p1.x, y1 = p1.y + nodeHeight/2;
+        const x2 = p2.x, y2 = p2.y - nodeHeight/2;
+        const midY = (y1 + y2) / 2;
+        
+        svgLines += `<path d="M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}" 
+                   fill="none" stroke="${strokeColor}" stroke-width="${strokeWidth}" 
+                   stroke-linejoin="round" stroke-opacity="${strokeOpacity}"/>`;
+        drawLines(child);
+    });
+}
                 const x1 = p1.x;
                 const y1 = p1.y + nodeHeight / 2;
                 const x2 = p2.x;
@@ -1328,7 +1692,9 @@
             if (!pos) return;
             const isRoot = node.id === root.id;
             const rootClass = isRoot ? ' uroot-node' : '';
-            nodesHtml += `<div class="uperson-node${rootClass}" style="left:${pos.x}px;top:${pos.y}px;" data-id="${node.id}" onclick="window.showPersonDetail(${node.id})">`;
+            // 判断高亮状态
+            const highlightClass = getHighlightClass(node.id);
+            nodesHtml += `<div class="uperson-node${rootClass} ${highlightClass}" style="left:${pos.x}px;top:${pos.y}px;" data-id="${node.id}" onclick="window.showPersonDetail(${node.id})">`;
             nodesHtml += `<span class="uname">${node.name}</span>`;
             if (node.title) nodesHtml += `<span class="utitle">${node.title}</span>`;
             if (node.generation) nodesHtml += `<span class="ugeneration">${node.generation}</span>`;
@@ -1379,6 +1745,68 @@
     window.showPersonDetail = function(id) {
         const person = genealogyData.find(p => p.id === id);
         if (!person) { alert('未找到该人物信息'); return; }
+        window.showPersonDetail = function(id) {
+    const person = genealogyData.find(p => p.id === id);
+    if (!person) { alert('未找到该人物信息'); return; }
+    
+    // ---- 设置高亮状态 ----
+    // 1. 查找父节点
+    let parentId = null;
+    for (let p of genealogyData) {
+        if (p.children && p.children.includes(id)) {
+            parentId = p.id;
+            break;
+        }
+    }
+    // 2. 子节点列表
+    const childIds = person.children || [];
+    
+    highlightState = {
+        targetId: id,
+        parentId: parentId,
+        childIds: childIds
+    };
+    
+    // 重新渲染家谱（应用高亮）
+    const roots = buildTree(genealogyData);
+    renderUTree(roots);
+    
+    // ---- 弹窗内容（原有逻辑，增加父子信息） ----
+    const modal = document.getElementById('personModal');
+    if (!modal) return;
+    
+    document.getElementById('personName').textContent = person.name;
+    document.getElementById('personTitle').textContent = `${person.generation || ''} · ${person.title || ''}`;
+    
+    let bioHtml = `<p>${person.bio || '暂无详细记载。'}</p>`;
+    if (person.spouse) {
+        bioHtml += `<p style="margin-top:8px;"><strong>配偶：</strong>${person.spouse}</p>`;
+    }
+    
+    // ---- 显示父亲 ----
+    if (parentId) {
+        const parent = genealogyData.find(p => p.id === parentId);
+        if (parent) {
+            bioHtml += `<p><strong>👨 父亲：</strong><span style="color:#2B6CB0;cursor:pointer;text-decoration:underline;" onclick="jumpToPerson(${parent.id})">${parent.name}</span></p>`;
+        }
+    }
+    
+    // ---- 显示子女 ----
+    if (person.children && person.children.length > 0) {
+        const childNames = person.children.map(cid => {
+            const child = genealogyData.find(p => p.id === cid);
+            return child ? `<span style="color:#276749;cursor:pointer;text-decoration:underline;" onclick="jumpToPerson(${cid})">${child.name}</span>` : '';
+        }).filter(Boolean).join('、');
+        if (childNames) {
+            bioHtml += `<p><strong>👶 子女：</strong>${childNames}</p>`;
+        }
+    }
+    
+    document.getElementById('personBio').innerHTML = bioHtml;
+    document.getElementById('personRelation').innerHTML = '🔍 点击姓名可跳转查看';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+};
         const modal = document.getElementById('personModal');
         if (!modal) return;
         document.getElementById('personName').textContent = person.name;
@@ -1405,11 +1833,19 @@
             closeBtn.addEventListener('click', function() {
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
+                // ---- 清除高亮 ----
+            highlightState = { targetId: null, parentId: null, childIds: [] };
+            const roots = buildTree(genealogyData);
+            renderUTree(roots);
             });
             modal.addEventListener('click', function(e) {
                 if (e.target === this) {
                     modal.style.display = 'none';
                     document.body.style.overflow = 'auto';
+                    // ---- 清除高亮 ----
+                highlightState = { targetId: null, parentId: null, childIds: [] };
+                const roots = buildTree(genealogyData);
+                renderUTree(roots);
                 }
             });
         }
